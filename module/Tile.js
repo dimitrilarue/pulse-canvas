@@ -57,7 +57,7 @@ Tile.prototype.jump = function(x,y){
 };
 
 Tile.prototype.addParent = function(parent){
-	Tile.prototype.super.addParent.call(this,parent);
+	Tile.prototype._super.addParent.call(this,parent);
 	//this.anchor 	= {x:-(this.width/2), y:-(this.height/2)};
 	if (parent instanceof Grid){
 		this.displayParent = parent;

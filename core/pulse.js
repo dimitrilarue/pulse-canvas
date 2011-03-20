@@ -53,7 +53,7 @@ pulse.extend = function(parent,child){
 	temp.prototype = parent.prototype;
 	child.prototype = new temp();
 	
-	child.prototype.super = parent.prototype;
+	child.prototype._super = parent.prototype;
 	child.prototype.constructor = child;
 		
 	

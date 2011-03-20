@@ -50,7 +50,7 @@ Grid.prototype.updateDimension = function(x,y){
 };
 
 Grid.prototype._userEventsManager = function(){
-	Grid.prototype.super._userEventsManager.call(this);
+	Grid.prototype._super._userEventsManager.call(this);
 	
 	var canvas = jQuery(this.canvas), that = this;
 	jQuery(window).resize(function() {
@@ -110,7 +110,7 @@ Grid.prototype.displayGrid = function(){
 //	console.log('decal :' + decalY);
 //	elem.py = elem.py-decalY;
 //	
-//	Grid.prototype.super.displayElement.call(this,elem);
+//	Grid.prototype._super.displayElement.call(this,elem);
 
 //};
 
