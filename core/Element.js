@@ -96,15 +96,15 @@ pulse.Element.prototype.addChild = function(params) {
 	};
 	params = jQuery.extend(defaults, params);
 	// pulse.log(params.child instanceof pulse.Sprite);
-	if (params.child instanceof pulse.Sprite === false	&& !params.child instanceof pulse.Element === false) {
+	if ((params.child instanceof pulse.Sprite === false)	
+	    && (!params.child instanceof pulse.Element === false)
+	) {
 		throw 'Child must be a instance of pulse.Sprite or pulse.Element';
 	}
 	var id = params.frameId;
 	if (params.frameLabel != null) {
 		var frame = this._getFrame(params.frameLabel);
-		if (frame === false) {
-			id = frame;
-		}
+		if (frame === false) id = frame;
 	}
 	this.frames[id].content.push(params.child);
 	params.child.addParent(this);
