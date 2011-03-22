@@ -1,4 +1,4 @@
-var Grid = pulse.extend(pulse.Map,function(params){
+pulse.Grid = pulse.extend(pulse.Map,function(params){
 	pulse.Map.call(this,params);
 	
     var defaults = {
@@ -23,20 +23,20 @@ var Grid = pulse.extend(pulse.Map,function(params){
 	this.displayAll();
 });
 
-Grid.prototype.tileHeight = null;
-Grid.prototype.tileWidth = null;
-Grid.prototype.nbX = null;
-Grid.prototype.nbY = null;
-Grid.prototype.heightGridX = null;
-Grid.prototype.widthGridX = null;
-Grid.prototype.heightGridY = null;
-Grid.prototype.widthGridY = null;
+pulse.Grid.prototype.tileHeight = null;
+pulse.Grid.prototype.tileWidth = null;
+pulse.Grid.prototype.nbX = null;
+pulse.Grid.prototype.nbY = null;
+pulse.Grid.prototype.heightGridX = null;
+pulse.Grid.prototype.widthGridX = null;
+pulse.Grid.prototype.heightGridY = null;
+pulse.Grid.prototype.widthGridY = null;
 
-Grid.prototype.setCanvasSize = function(){
+pulse.Grid.prototype.setCanvasSize = function(){
 	this.canvas.width = jQuery(window).width()-this.offset;
     this.canvas.height = jQuery(window).height()-this.offset;
 };
-Grid.prototype.updateDimension = function(x,y){
+pulse.Grid.prototype.updateDimension = function(x,y){
 	this.nbX = x;
 	this.nbY = y;
 	this.heightGridX = (this.nbX*this.tileHeight/2)-this.tileHeight/2;
@@ -49,8 +49,8 @@ Grid.prototype.updateDimension = function(x,y){
 	this.displayAll();
 };
 
-Grid.prototype._userEventsManager = function(){
-	Grid.prototype._super._userEventsManager.call(this);
+pulse.Grid.prototype._userEventsManager = function(){
+	pulse.Grid.prototype._super._userEventsManager.call(this);
 	
 	var canvas = jQuery(this.canvas), that = this;
 	jQuery(window).resize(function() {
@@ -74,7 +74,7 @@ Grid.prototype._userEventsManager = function(){
 
 
 
-Grid.prototype.displayGrid = function(){
+pulse.Grid.prototype.displayGrid = function(){
 	this.context.save();
 	this.context.translate(this.dX,this.dY);
 	this.context.beginPath();
@@ -101,7 +101,7 @@ Grid.prototype.displayGrid = function(){
 	this.context.restore();
 };
 
-//Grid.prototype.displayElement = function(elem){
+//pulse.Grid.prototype.displayElement = function(elem){
 //	
 //	var heightX=elem.baseX*this.tileHeight/2+this.tileHeight/2;
 //	var heightY=elem.baseY*this.tileHeight/2+this.tileHeight/2;
@@ -110,7 +110,7 @@ Grid.prototype.displayGrid = function(){
 //	console.log('decal :' + decalY);
 //	elem.py = elem.py-decalY;
 //	
-//	Grid.prototype._super.displayElement.call(this,elem);
+//	pulse.Grid.prototype._super.displayElement.call(this,elem);
 
 //};
 

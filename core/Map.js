@@ -1,8 +1,7 @@
 /**
  * @class Map
  */
-pulse.Map = pulse.extend(pulse.EventManager,
-function(params){
+pulse.Map = pulse.extend(pulse.EventManager,function(params){
 
     pulse.EventManager.call(this);
 

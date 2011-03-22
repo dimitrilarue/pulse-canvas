@@ -1,4 +1,4 @@
-var Tile = pulse.extend(pulse.Element,function(params){
+pulse.Tile = pulse.extend(pulse.Element,function(params){
 	pulse.Element.call(this,params);
 	
     var defaults = {cx: 0, cy: 0, baseX: 1, baseY: 1, anchor: {x:0, y:0}, briqueLevel:0}; 
@@ -14,16 +14,16 @@ var Tile = pulse.extend(pulse.Element,function(params){
 });
 
 
-Tile.prototype.cx = 0;
-Tile.prototype.cy = 0;
-Tile.prototype.baseX = 0;
-Tile.prototype.baseY = 0;
-Tile.prototype.decalY = 0;
-Tile.prototype.displayParent = null;
-Tile.prototype.mouvement = null;
-Tile.prototype.briqueLevel = null;
+pulse.Tile.prototype.cx = 0;
+pulse.Tile.prototype.cy = 0;
+pulse.Tile.prototype.baseX = 0;
+pulse.Tile.prototype.baseY = 0;
+pulse.Tile.prototype.decalY = 0;
+pulse.Tile.prototype.displayParent = null;
+pulse.Tile.prototype.mouvement = null;
+pulse.Tile.prototype.briqueLevel = null;
 
-Tile.prototype.move = function(x,y){
+pulse.Tile.prototype.move = function(x,y){
 	this.cx = x;
 	this.cy = y;
     this.zindex = this.cy - this.cx;
@@ -36,7 +36,7 @@ Tile.prototype.move = function(x,y){
     
 };
 
-Tile.prototype.jump = function(x,y){
+pulse.Tile.prototype.jump = function(x,y){
 
 
 	var cTo = this.calculCoord(x,y);
@@ -56,8 +56,8 @@ Tile.prototype.jump = function(x,y){
     this.bind(pulse.Animate.eventComplete, fall);
 };
 
-Tile.prototype.addParent = function(parent){
-	Tile.prototype._super.addParent.call(this,parent);
+pulse.Tile.prototype.addParent = function(parent){
+	pulse.Tile.prototype._super.addParent.call(this,parent);
 	//this.anchor 	= {x:-(this.width/2), y:-(this.height/2)};
 	if (parent instanceof Grid){
 		this.displayParent = parent;
@@ -83,7 +83,7 @@ Tile.prototype.addParent = function(parent){
 	
 };
 
-Tile.prototype.calculCoord = function(x,y){
+pulse.Tile.prototype.calculCoord = function(x,y){
 		
 	if (x === undefined || y === undefined){
 		x = this.cx;

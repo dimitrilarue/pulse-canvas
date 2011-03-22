@@ -8,20 +8,16 @@
 pulse.Sprite = pulse.extend(pulse.EventManager,function(params){
 	pulse.EventManager.call(this);
 	
-	var defaults = {src: '', px: 0, py: 0, height: 0, width: 0}; 
+	var defaults = {src: '', px: 0, py: 0, height: 0, width: 0, zindex: 0}; 
     params = jQuery.extend(defaults, params);
     
 
     this.height 	= params.height;
     this.width 		= params.width;
-    if(params.src != ''){
-        this.image      	= new Image();
-        this.image.src  	= params.src;
-        var that = this;
-        this.image.onload 	= function(){
-            that.trigger(new pulse.Event(that,'loaded'));
-        };
-    }
+    this.content    = []; 
+    
+    this.addChild(params.src);
+    
     this.px 		= params.px;
     this.py 		= params.py;
 	this.zindex 	= params.zindex;
@@ -30,8 +26,8 @@ pulse.Sprite = pulse.extend(pulse.EventManager,function(params){
 	this.anchor.x 	= 0;
 	this.anchor.y 	= 0;
 	this.effects 	= {};
+    
 
-	//console.log(this.px);
 	this.bind('loaded', this.display);
 });
 
@@ -50,7 +46,7 @@ pulse.Sprite.prototype.name = null;
  * @type HTMLImage
  * TODO used a array for more images
  */
-pulse.Sprite.prototype.image = null;
+pulse.Sprite.prototype.content = null;
 
 /**
  * Position x in pixel on convas relative to the parent object
@@ -176,6 +172,16 @@ pulse.Sprite.prototype.anchor = null;
 
 pulse.Sprite.prototype.effects = null;
 
+pulse.Sprite.prototype.addChild = function(src) {
+    if(src != ''){
+        var image = pulse.loader.getImage(src);            
+            
+        if (image === false) {
+            var that = this;
+            image = pulse.loader.addImage(src,function(){that.trigger(new pulse.Event(that,'loaded')); });
+        }
+    }
+};
 
 
 pulse.Sprite.prototype.addEffect = function(key, effect, target) {
