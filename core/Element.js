@@ -18,9 +18,8 @@ pulse.Element = pulse.extend(pulse.Sprite, function(params) {
 	params = jQuery.extend(defaults, params);
 
 
-
-	this.frames = [];// {life: 0, id: 0, label: '', content: {}, effects:
-						// []};
+	this.frames = [];
+		
 	this.setFrame();
 
 	this.interval = pulse.Interval.getInstance();
@@ -32,9 +31,21 @@ pulse.Element.prototype.interval = null;
 pulse.Element.prototype.played = false;
 pulse.Element.prototype.currentFrame = 0;
 
+pulse.Element.prototype.isOver = function(px, py, click) {
+    pulse.Element._super.isOver(px, py, click);
+    
+    for (i in this.frames[this.currentFrame].content) {
+        content = this.frames[this.currentFrame].content[i];
+        if ((content instanceof pulse.Sprite)
+           || (content instanceof pulse.Element)
+        ) {
+            content.isOver(px, py, click);
+        }
+    }
+};
 
 
-pulse.Element.prototype.setFrame = function(params) {
+pulse.Element.prototype.setFrame = function() {
 	var defaults = {
 		frameId : null,
 		label : null,
@@ -83,39 +94,48 @@ pulse.Element.prototype._addFrame = function(params) {
 	this.frames.push( {
 		duration : params.duration,
 		label : params.label,
-		content : []
+		content : [],
+		func: []
 	});
 	return id;
 };
 
-pulse.Element.prototype.addChild = function(params) {
+pulse.Element.prototype.addChild = function() {
+    
+    var id = 0,
+        child  = arguments[0],
+        frameTarget = arguments[1] || 0;
+        //context = arguments[2],     
+        //func = arguments[3];
 
-	var defaults = {
-		frameId : 0,
-		frameLabel : null
-	};
-	params = jQuery.extend(defaults, params);
-	// pulse.log(params.child instanceof pulse.Sprite);
-	if ((params.child instanceof pulse.Sprite === false)	
-	    && (!params.child instanceof pulse.Element === false)
+
+	if ((child instanceof pulse.Sprite === false)	
+	    && (child instanceof pulse.Element === false)
+	    && (typeof child !== "string")
 	) {
 		throw 'Child must be a instance of pulse.Sprite or pulse.Element';
 	}
-	var id = params.frameId;
-	if (params.frameLabel != null) {
-		var frame = this._getFrame(params.frameLabel);
-		if (frame === false) id = frame;
+	
+	if (typeof frameTarget == "number") id = frameTarget;
+	else if (typeof frameTarget == "string") {
+		var frame = this._getFrame(frameTarget);
+		if (frame !== false) id = frame;
 	}
-	this.frames[id].content.push(params.child);
-	params.child.addParent(this);
-	var H = params.child.py + params.child.height;
+	
+	this.frames[id].content.push(child);
+	//this.frames[id].script.push({context:context,fn:func});
+	child.addParent(this);
+	
+	/*
+	var H = child.py + child.height;
 	if (H > this.height) {
 		this.height = H;
 	}
-	var W = params.child.px + params.child.width;
+	var W = child.px + child.width;
 	if (W > this.width) {
 		this.width = W;
 	}
+	*/
 
 };
 
@@ -133,12 +153,12 @@ pulse.Element.prototype.getChildByZ = function() {
 	return orderedElem;
 };
 
-
 pulse.Element.prototype.move = function(x, y) {
 	this.px = x;
 	this.py = y;
 	this.display();
 };
+
 pulse.Element.prototype.go = function(frame) {
 	if(typeof frame == 'number') {
 		this.currentFrame = frame;		

@@ -211,12 +211,12 @@ pulse.Map.prototype.displayElement = function(elem){
     }
     if (elem.rotation != 0 || elem.rotation != 360) this.context.rotate(elem.rotation * Math.PI / 180);
     this.context.save();
-    this.context.translate( - elem.anchor.x, -elem.anchor.y);
+    this.context.translate( - elem.anchor.x, - elem.anchor.y);
 
     if (elem.image instanceof HTMLImageElement){
         this.context.drawImage(elem.image, 0, 0);
     }
-    if (elem instanceof pulse.Element){
+    else if (elem instanceof pulse.Element){
         for (i in elem.getChildByZ()){
             var content = elem.frames[elem.currentFrame].content[i];
             if (content instanceof pulse.Sprite){
@@ -224,6 +224,8 @@ pulse.Map.prototype.displayElement = function(elem){
             }
         }
     }
+    elem.script();
+    
     this.context.restore();
     this.context.restore();
     var pxReal = elem.px + this.dX - elem.anchor.x;

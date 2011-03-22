@@ -9,7 +9,7 @@ function (pulse){
                 onload = arguments[1];
                 
             if(typeof src !== "string") throw 'Source url of the image must be a string';
-            if(images[src] instanceof Image === false) {
+            if(images[src] instanceof HTMLImageElement === false) {
                 images[src] = new Image();
                 images[src].src = src;
             }

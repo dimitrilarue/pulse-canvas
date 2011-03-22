@@ -14,8 +14,6 @@ pulse.Sprite = pulse.extend(pulse.EventManager,function(params){
 
     this.height 	= params.height;
     this.width 		= params.width;
-    this.content    = []; 
-    
     this.addChild(params.src);
     
     this.px 		= params.px;
@@ -26,7 +24,16 @@ pulse.Sprite = pulse.extend(pulse.EventManager,function(params){
 	this.anchor.x 	= 0;
 	this.anchor.y 	= 0;
 	this.effects 	= {};
+	this.scripts 	= function(){};
     
+    if(src != ''){
+        this.image = pulse.loader.getImage(src);            
+            
+        if (this.image === false) {
+            var that = this;
+            this.image = pulse.loader.addImage(src,function(){that.trigger(new pulse.Event(that,'loaded')); });
+        }
+    }
 
 	this.bind('loaded', this.display);
 });
@@ -44,9 +51,8 @@ pulse.Sprite.prototype.name = null;
  * @default null
  * @property image
  * @type HTMLImage
- * TODO used a array for more images
  */
-pulse.Sprite.prototype.content = null;
+pulse.Sprite.prototype.image = null;
 
 /**
  * Position x in pixel on convas relative to the parent object
@@ -168,20 +174,9 @@ pulse.Sprite.prototype.zone = null;
  * @type Object
  */
 pulse.Sprite.prototype.anchor = null;
-
-
 pulse.Sprite.prototype.effects = null;
+pulse.Sprite.prototype.scripts = null;
 
-pulse.Sprite.prototype.addChild = function(src) {
-    if(src != ''){
-        var image = pulse.loader.getImage(src);            
-            
-        if (image === false) {
-            var that = this;
-            image = pulse.loader.addImage(src,function(){that.trigger(new pulse.Event(that,'loaded')); });
-        }
-    }
-};
 
 
 pulse.Sprite.prototype.addEffect = function(key, effect, target) {
@@ -222,6 +217,8 @@ pulse.Sprite.prototype.getActiveEffects = function() {
  * @return boolean
  */
 pulse.Sprite.prototype.isOver = function(px, py, click) {
+    
+	if(this.image instanceof HTMLImageElement === false) return false;
 	
 	/* If sprite not displayed */
 	if (!this.displayed) {
@@ -241,21 +238,17 @@ pulse.Sprite.prototype.isOver = function(px, py, click) {
 			
 		}
 		this.canvasBuffer.context.clearRect(0,0,this.canvasBuffer.canvas.width,this.canvasBuffer.canvas.height);	
-		for (i in this.frames[this.currentFrame].content) {
-			content = this.frames[this.currentFrame].content[i];
-			if (content instanceof pulse.Sprite) {
-
-				if(this.scaleX !== 1 || this.scaleY !== 1){
-					this.canvasBuffer.context.scale(content.scaleX,content.scaleY);
-				}
-				if(content.rotation !== 0 || content.rotation !== 360)	this.canvasBuffer.context.rotate(content.rotation * Math.PI / 180);
-				//console.log(-content.anchor.x, -content.anchor.y);
-				//this.canvasBuffer.context.save();
-				//this.canvasBuffer.context.translate(-content.anchor.x, -content.anchor.y);
-				this.canvasBuffer.context.drawImage(content.image, content.px, content.py,	content.width, content.height);
-				//this.canvasBuffer.context.restore();
-			}
-		}
+		
+		if(this.scaleX !== 1 || this.scaleY !== 1){
+            this.canvasBuffer.context.scale(this.scaleX,this.scaleY);
+        }
+        if(this.rotation !== 0 || this.rotation !== 360)  this.canvasBuffer.context.rotate(this.rotation * Math.PI / 180);
+        //console.log(-content.anchor.x, -content.anchor.y);
+        //this.canvasBuffer.context.save();
+        //this.canvasBuffer.context.translate(-content.anchor.x, -content.anchor.y);
+        this.canvasBuffer.context.drawImage(this.image, this.px, this.py,  this.width, this.height);
+        //this.canvasBuffer.context.restore();
+		
 		delete(content);
 
 		this.mouseInZone = true;
@@ -307,6 +300,11 @@ pulse.Sprite.prototype.setState = function(state) {
 	}
 };
 
+
+pulse.prototype.setScript = function(fn) {
+  if (typeof fn != "function") throw 'Param must be a function';
+  this.script = fn;
+};
 
 
 /**
