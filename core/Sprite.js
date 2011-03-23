@@ -226,8 +226,12 @@ pulse.Sprite.prototype.isOver = function(px, py, click) {
 		return false;
 	}
 	/* Start coord is on sprite */
-	if (px > this.zone.xStart && px < this.zone.xEnd && py > this.zone.yStart	&& py < this.zone.yEnd) {
-		/* I */
+	if ((px > this.zone.xStart)
+	   && (px < this.zone.xEnd) 
+	   && (py > this.zone.yStart)
+	   && (py < this.zone.yEnd)
+	) {
+
 		if (!this.mouseInZone) {
 
 			this.canvasBuffer = {};
@@ -239,9 +243,7 @@ pulse.Sprite.prototype.isOver = function(px, py, click) {
 		}
 		this.canvasBuffer.context.clearRect(0,0,this.canvasBuffer.canvas.width,this.canvasBuffer.canvas.height);	
 		
-		if(this.scaleX !== 1 || this.scaleY !== 1){
-            this.canvasBuffer.context.scale(this.scaleX,this.scaleY);
-        }
+		if(this.scaleX !== 1 || this.scaleY !== 1) this.canvasBuffer.context.scale(this.scaleX,this.scaleY);
         if(this.rotation !== 0 || this.rotation !== 360)  this.canvasBuffer.context.rotate(this.rotation * Math.PI / 180);
         //console.log(-content.anchor.x, -content.anchor.y);
         //this.canvasBuffer.context.save();
