@@ -19,7 +19,6 @@ pulse.Element = pulse.extend(pulse.Sprite, function(params) {
 
 
 	this.frames = [];
-		
 	this.setFrame();
 
 	this.interval = pulse.Interval.getInstance();
@@ -68,7 +67,7 @@ pulse.Element.prototype.setFrame = function() {
 		}
 		throw 'Frame ' + params.frameId + ' is not defined';
 	} else {
-		var i = this._getFrame(params.label);
+		var i = this._getFrameByLabel(params.label);
 		if (i) {
 			this.frames[i].duration = params.duration;
 			return i;
@@ -79,9 +78,9 @@ pulse.Element.prototype.setFrame = function() {
 	}
 };
 
-pulse.Element.prototype._getFrame = function(label) {
-	var i;
-	for (i in this.frames) {
+pulse.Element.prototype._getFrameByLabel = function(label) {
+
+	for (var i in this.frames) {
 		if (this.frames[i].label == label) {
 			return i;
 		}
@@ -118,7 +117,7 @@ pulse.Element.prototype.addChild = function() {
 	
 	if (typeof frameTarget == "number") id = frameTarget;
 	else if (typeof frameTarget == "string") {
-		var frame = this._getFrame(frameTarget);
+		var frame = this._getFrameByLabel(frameTarget);
 		if (frame !== false) id = frame;
 	}
 	
@@ -164,7 +163,7 @@ pulse.Element.prototype.go = function(frame) {
 		this.currentFrame = frame;		
 	}
 	else if (typeof frame == 'string'){
-		var id = this._getFrame(frame);
+		var id = this._getFrameByLabel(frame);
 		if(id === false) id = 0;
 		this.currentFrame = id;
 	}

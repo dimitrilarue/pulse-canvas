@@ -139,9 +139,9 @@ pulse.Map.prototype.addElement = function(params){
 };
 
 pulse.Map.prototype.getElementByZ = function(layer){
-    if (layer == null){
-        layer = 'default';
-    }
+    
+    layer = layer || "default";
+    
     var orderedElem = [];
     for (i in this.layers[layer].elements){
         orderedElem.push(this.layers[layer].elements[i]);
@@ -155,8 +155,8 @@ pulse.Map.prototype.getElementByZ = function(layer){
 pulse.Map.prototype.draw = function(){
     if (this.toDraw){
         this.toDraw = false;
+        this.displayAll();
     }
-    this.displayAll();
 
 };
 
@@ -174,7 +174,6 @@ pulse.Map.prototype.displayAll = function(){
     this.context.save();
     this.context.translate(this.dX, this.dY);
     for (layer in this.layers){
-        //console.log('layer :',layer);
         var elems = this.getElementByZ(layer);
         //pulse.log(elems);
         for (elem in elems){
@@ -200,16 +199,15 @@ pulse.Map.prototype.displayElement = function(elem){
     this.context.translate(elem.px, elem.py);
 
     var effect = elem.getActiveEffects();
+    
     for (i in effect){
         effect[i].apply(elem, [this.context]);
     }
-    if (elem.alpha != 1){
-        this.context.globalAlpha = elem.alpha;
-    }
-    if (elem.scaleX != 1 || elem.scaleY != 1){
-        this.context.scale(elem.scaleX, elem.scaleY);
-    }
+    
+    if (elem.alpha != 1) this.context.globalAlpha = elem.alpha;
+    if (elem.scaleX != 1 || elem.scaleY != 1) this.context.scale(elem.scaleX, elem.scaleY);    
     if (elem.rotation != 0 || elem.rotation != 360) this.context.rotate(elem.rotation * Math.PI / 180);
+    
     this.context.save();
     this.context.translate( - elem.anchor.x, - elem.anchor.y);
 
@@ -241,7 +239,11 @@ pulse.Map.prototype.displayElement = function(elem){
 };
 
 pulse.Map.prototype.isOnCanvas = function(elem){
-    if (elem.px + this.dX + elem.width >= 0 && elem.px + this.dX - elem.width < this.canvas.width && elem.py + this.dY + elem.width >= 0 && elem.py + this.dY - elem.width < this.canvas.height){
+    if ((elem.px + this.dX + elem.width >= 0)
+       && (elem.px + this.dX - elem.width < this.canvas.width)
+       && (elem.py + this.dY + elem.width >= 0)
+       && (elem.py + this.dY - elem.width < this.canvas.height)
+    ){
         return true;
     }
     return false;
