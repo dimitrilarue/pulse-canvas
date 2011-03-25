@@ -259,7 +259,6 @@ pulse.Map.prototype.onDisplayRequest = function(){
     //	this.context.restore();
 };
 pulse.Map.prototype.onRemoveRequest = function(e){
-    console.log(e.source);
     for (i in this.layers){
         delete(this.layers[i].elements[e.source.id]);
     }

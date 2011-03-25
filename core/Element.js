@@ -110,7 +110,6 @@ pulse.Element.prototype.addChild = function() {
 
 	if ((child instanceof pulse.Sprite === false)	
 	    && (child instanceof pulse.Element === false)
-	    && (typeof child !== "string")
 	) {
 		throw 'Child must be a instance of pulse.Sprite or pulse.Element';
 	}
