@@ -15,7 +15,8 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
         dX: 0,
         dY: 0,
         tileWidth: 20,
-        tileHeight: 10
+        tileHeight: 10,
+        draggable: false
     };
     params = jQuery.extend(defaults, params);
 
@@ -25,7 +26,6 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
     this.width = params.width;
     this.dX = params.dX;
     this.dY = params.dY;
-    this.className = params.className;
     this.drag = false;
 
     this.draggable = params.draggable;
