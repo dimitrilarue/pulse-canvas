@@ -24,14 +24,14 @@ pulse.Sprite = pulse.extend(pulse.EventManager,function(params){
 	this.anchor.x 	= 0;
 	this.anchor.y 	= 0;
 	this.effects 	= {};
-	this.scripts 	= function(){};
+	this.script 	= function(){};
     
-    if(src != ''){
-        this.image = pulse.loader.getImage(src);            
+    if(params.src != ''){
+        this.image = pulse.loader.getImage(params.src);            
             
         if (this.image === false) {
             var that = this;
-            this.image = pulse.loader.addImage(src,function(){that.trigger(new pulse.Event(that,'loaded')); });
+            this.image = pulse.loader.addImage(params.src,function(){that.trigger(new pulse.Event(that,'loaded')); });
         }
     }
 
@@ -251,7 +251,6 @@ pulse.Sprite.prototype.isOver = function(px, py, click) {
         this.canvasBuffer.context.drawImage(this.image, this.px, this.py,  this.width, this.height);
         //this.canvasBuffer.context.restore();
 		
-		delete(content);
 
 		this.mouseInZone = true;
 		if (this.canvasBuffer.context.getImageData(px - this.zone.xStart, py - this.zone.yStart, 1, 1).data[3] != 0) {
