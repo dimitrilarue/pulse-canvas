@@ -15,9 +15,7 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
         dX: 0,
         dY: 0,
         tileWidth: 20,
-        tileHeight: 10,
-        target: 'body',
-        className: ''
+        tileHeight: 10
     };
     params = jQuery.extend(defaults, params);
 
