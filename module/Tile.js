@@ -1,5 +1,5 @@
 (function (pulse){
-    Tile = pulse.extend(pulse.Element,function(params){
+    var Tile = pulse.extend(pulse.Element,function(params){
     	pulse.Element.call(this,params);
     	
         var defaults = {cx: 0, cy: 0, baseX: 1, baseY: 1, anchor: {x:0, y:0}, briqueLevel:0}; 
@@ -96,5 +96,7 @@
     	c.py = this.displayParent.heightGridX + (x-y)*this.displayParent.tileHeight/2 ;
     	return c;
     };
-
+    
+    pulse.Tile = Tile;
+    
 })(pulse);
