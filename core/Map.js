@@ -6,7 +6,6 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
     pulse.EventManager.call(this);
 
     var defaults = {
-        offset: 0,
         target: document.body,
         height: 300,
         width: 300,
@@ -20,7 +19,6 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
     };
     params = jQuery.extend(defaults, params);
 
-    this.offset = -params.offset;
     this.target = params.target;
     this.height = params.height;
     this.width = params.width;
@@ -48,7 +46,6 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
 });
 
 pulse.Map.prototype.layers = null;
-pulse.Map.prototype.offset = null;
 pulse.Map.prototype.target = null;
 pulse.Map.prototype.height = null;
 pulse.Map.prototype.width = null;
@@ -78,17 +75,14 @@ pulse.Map.prototype._userEventsManager = function(){
     canvas.mouseup(function(e){
         that.drag = false;
         that.display();
-        //canvas.offset({top :that.offset/2,left :that.offset/2});
     });
     canvas.mousemove(function(e){
 
         if (that.drag){
-            //var offset = canvas.offset();
             var deriv = pulse.Mouse.getDeriv();
             that.dX += deriv.x;
             that.dY += deriv.y;
             that.display();
-            //canvas.offset({left:offset.left+deriv.x,top:offset.top+deriv.y});
         }
     });
 
