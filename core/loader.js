@@ -19,7 +19,7 @@ function (pulse){
     
     loader.getImage = function (src) {
         if(images[src] instanceof Image) return images[src];
-        else return false;
+        return false;
     };
     
     
