@@ -7,7 +7,7 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
 
     var defaults = {
         offset: 0,
-        target: 'body',
+        target: document.body,
         height: 300,
         width: 300,
         nbX: 20,
@@ -34,17 +34,9 @@ pulse.Map = pulse.extend(pulse.EventManager,function(params){
 
     this.layers = {};
 
-    //build canvas
-    if (this.className == null){
-        var buffer = jQuery('<canvas>no support</canvas>');
-    }
-    else{
-        var buffer = jQuery('<canvas class="' + this.className + '">no support</canvas>');
-    }
-    buffer.appendTo(this.target);
-    //buffer.offset({top :this.offset/2,left :this.offset/2});
-    this.canvas = buffer[0];
-
+    this.canvas = document.createElement('canvas');
+    this.target.appendChild(this.canvas);
+    
     this.setCanvasSize();
     this.context = this.canvas.getContext('2d');
 
