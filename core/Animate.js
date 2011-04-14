@@ -5,14 +5,13 @@
  * @author Dimitri Larue
  * @constructor
  */
-pulse.Animate = pulse.extend(pulse.Sprite, function(object,duration,options){
+pulse.Animate = pulse.extend(pulse.EventManager, function(object,duration,options){
 
 	pulse.Base.call(this);
 	
-	var defaults = {
-		ease:'easeNone'
-	};
-	options = jQuery.extend(defaults, options);
+	options = options || {};
+	options.ease = options.ease || 'easeNone';
+
 	this.object = object;
 	this.addParent(object);
 	this.property = {};

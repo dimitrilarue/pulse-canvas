@@ -2,18 +2,13 @@
     var Grid = pulse.extend(pulse.Map,function(params){
     	pulse.Map.call(this,params);
     	
-        var defaults = {
-    		nbX: 20,
-    	    nbY: 20,
-    	    tileWidth: 80,
-    	    tileHeight: 40
-    	}; 
-    	params = jQuery.extend(defaults, params);
+    	params = params || {};
+    	this.tileWidth = params.tileWidth || 80;
+    	this.tileHeight = params.tileHeight || 40;
+    	this.nbX = params.nbX || 20;
+    	this.nbY = params.nbY || 20;
     	
-    	this.tileWidth = params.tileWidth;
-    	this.tileHeight = params.tileHeight;
-    	this.nbX = params.nbX;
-    	this.nbY = params.nbY;
+    	
     	this.heightGridX = (this.nbX*this.tileHeight/2)-this.tileHeight/2;
     	this.widthGridX = (this.nbX*this.tileWidth/2)-this.tileWidth/2;
     	this.heightGridY = (this.nbY*this.tileHeight/2)-this.tileHeight/2;

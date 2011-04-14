@@ -8,25 +8,22 @@
 pulse.Sprite = pulse.extend(pulse.EventManager,function(params){
 	pulse.EventManager.call(this);
 	
-	var defaults = {src: '', px: 0, py: 0, height: 0, width: 0, zindex: 0}; 
-    params = jQuery.extend(defaults, params);
-    
-
-    this.height 	= params.height;
-    this.width 		= params.width;
-    this.addChild(params.src);
-    
-    this.px 		= params.px;
-    this.py 		= params.py;
-	this.zindex 	= params.zindex;
-	this.name 		= params.name;
+	params = params || {};
+    this.height 	= params.height || 0;
+    this.width 		= params.width || 0;    
+    this.px 		= params.px || 0;
+    this.py 		= params.py || 0;
+	this.zindex 	= params.zindex || 0;
+	this.name 		= params.name || '';
+	
+	
 	this.anchor 	= {};
 	this.anchor.x 	= 0;
 	this.anchor.y 	= 0;
 	this.effects 	= {};
 	this.script 	= function(){};
     
-    if(params.src != ''){
+    if(params.src !== ''){
         this.image = pulse.loader.getImage(params.src);            
             
         if (this.image === false) {

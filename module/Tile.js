@@ -2,16 +2,13 @@
     var Tile = pulse.extend(pulse.Element,function(params){
     	pulse.Element.call(this,params);
     	
-        var defaults = {cx: 0, cy: 0, baseX: 1, baseY: 1, anchor: {x:0, y:0}, briqueLevel:0}; 
-        params = jQuery.extend(defaults, params);
-    
-        this.cx = params.cx;
-        this.cy = params.cy;    
+    	params = params || {};
+        this.cx = params.cx || 0;
+        this.cy = params.cy || 0;    
         this.zindex = this.cy - this.cx;   
-        this.baseX = params.baseX;
-        this.baseY = params.baseY;
-    	this.anchor = params.anchor;
-    	this.briqueLevel = params.briqueLevel;
+        this.baseX = params.baseX || 1;
+        this.baseY = params.baseY || 1;
+    	this.anchor = params.anchor || {x:0, y:0};
     });
     
     

@@ -2,33 +2,18 @@
  * @class Map
  */
 pulse.Map = pulse.extend(pulse.EventManager,function(params){
-
     pulse.EventManager.call(this);
 
-    var defaults = {
-        target: document.body,
-        height: 300,
-        width: 300,
-        nbX: 20,
-        nbY: 20,
-        dX: 0,
-        dY: 0,
-        tileWidth: 20,
-        tileHeight: 10,
-        draggable: false
-    };
-    params = jQuery.extend(defaults, params);
-
-    this.target = params.target;
-    this.height = params.height;
-    this.width = params.width;
-    this.dX = params.dX;
-    this.dY = params.dY;
-    this.drag = false;
-
-    this.draggable = params.draggable;
+    params = params || {};
+    this.target = params.target || document.body;
+    this.height = params.height || 300;
+    this.width = params.width|| 300;
+    this.dX = params.dX || 0;
+    this.dY = params.dY || 0;
+    this.draggable = params.draggable || false;
 
     this.layers = {};
+    this.drag = false;
 
     this.canvas = document.createElement('canvas');
     this.target.appendChild(this.canvas);
@@ -102,33 +87,37 @@ pulse.Map.prototype.setOptionLayer = function(params){
     }
 };
 
-pulse.Map.prototype.addElement = function(params){
+pulse.Map.prototype.addElement = function(elem,layer){
     //pulse.log('addElem');
-    var defaults = {
-        layer: 'default',
-        elem: null
-    };
-    params = jQuery.extend(defaults, params);
-    if (params.elem instanceof pulse.Sprite){
-        if (this.layers[params.layer] == null) this.layers[params.layer] = {
-            options: {
-                order: length
-            },
-            elements: {}
-        };
-        this.layers[params.layer].elements[params.elem.id] = params.elem;
+   layer = layer || 'default';
+   
+    if (elem instanceof pulse.Sprite){
+        
+        this.layers[layer].elements[elem.id] = elem;
         params.elem.addParent(this);
 
     }
+};
+
+pulse.Map.prototype.addLayer = function(layer, options){
+    if (typeof this.layers[layer] === 'object') return;
+    
+    this.layers[layer] = {
+        options: options,
+        elements: {}
+    };
 };
 
 pulse.Map.prototype.getElementByZ = function(layer){
     
     layer = layer || "default";
     
-    var orderedElem = [];
-    for (i in this.layers[layer].elements){
-        orderedElem.push(this.layers[layer].elements[i]);
+    var orderedElem = [],
+        elements = this.layers[layer].elements,
+        i;
+        
+    for (i in elements){
+        orderedElem.push(elements[i]);
     }
     orderedElem.sort(function(a, b){
         return b.zindex - a.zindex;

@@ -7,16 +7,7 @@
  */
 
 pulse.Element = pulse.extend(pulse.Sprite, function(params) {
-	pulse.Sprite.call(this);
-
-	var defaults = {
-		name : '',
-		px : 0,
-		py : 0,
-		zindex : 0
-	};
-	params = jQuery.extend(defaults, params);
-
+	pulse.Sprite.call(this,params);
 
 	this.frames = [];
 	this.setFrame();
@@ -44,13 +35,12 @@ pulse.Element.prototype.isOver = function(px, py, click) {
 };
 
 
-pulse.Element.prototype.setFrame = function() {
-	var defaults = {
-		frameId : null,
-		label : null,
-		duration : 0
-	};
-	params = jQuery.extend(defaults, params);
+pulse.Element.prototype.setFrame = function(params) {
+
+	params = params || {};
+	params.frameId = params.frameId || null;
+	params.label = params.label || null;
+	params.duration = params.duration || 0;
 
 	// new frame
 	if (params.frameId === null && params.label == null) {
