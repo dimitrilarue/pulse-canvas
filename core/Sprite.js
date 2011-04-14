@@ -302,7 +302,7 @@ pulse.Sprite.prototype.setState = function(state) {
 };
 
 
-pulse.prototype.setScript = function(fn) {
+pulse.Sprite.prototype.setScript = function(fn) {
   if (typeof fn != "function") throw 'Param must be a function';
   this.script = fn;
 };
