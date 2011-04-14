@@ -34,8 +34,8 @@
     Grid.prototype.widthGridY = null;
     
     Grid.prototype.setCanvasSize = function(){
-    	this.canvas.width = jQuery(window).width()-this.offset;
-        this.canvas.height = jQuery(window).height()-this.offset;
+    	this.canvas.width = jQuery(window).width();
+        this.canvas.height = jQuery(window).height();
     };
     Grid.prototype.updateDimension = function(x,y){
     	this.nbX = x;
