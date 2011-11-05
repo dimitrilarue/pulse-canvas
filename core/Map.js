@@ -29,7 +29,6 @@
 	    this._userEventsManager();
 	
 	    var that = this;
-	    interval.add(this, this.draw, 0);
 	    
 	    //Amazing way to render just when its needed
 		//more info : http://paulirish.com/2011/requestanimationframe-for-smart-animating/
